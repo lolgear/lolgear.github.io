@@ -1,5 +1,6 @@
 # Dmitry Lobanov
-## Common
+
+## Common  
 **Date of birth**
 11.12.1990
 
@@ -13,13 +14,16 @@ single
 lobanovdm@hotmail.com
 
 ## Education
-### University 
+**University**
 Moscow State University
-### Faculty 
+
+**Faculty**
 Computational mathematics and cybernetics
-### Diploma 
+
+**Diploma**
 Upper estimations of deviation probabilities for sums of independent random variables
-### Area of interest 
+
+**Area of interest**
 Probability, time series, statistics
 
 ## Work Experience
@@ -33,14 +37,14 @@ Probability, time series, statistics
 * [PhotoSight](https://itunes.apple.com/ru/app/fotosajt/id763559204?mt=8&uo=4)
 * [Buro 24/7](https://itunes.apple.com/ru/app/buro-24-7/id926285326?mt=8&uo=4)
 
-
 1.5 years Ruby Development in Kula Tech
+
 * Automatic build server for iOS Apps
 * Advertising server maintenance and development
 * Ad targeting development
 
 ## Projects
-* [Hell’o Baby](https://itunes.apple.com/app/hello-baby-interactive-baby/id898977963?l=ru&ls=1&mt=8)
+* [Hell\'o Baby](https://itunes.apple.com/app/hello-baby-interactive-baby/id898977963?l=ru&ls=1&mt=8)
 * [Showrooms](https://itunes.apple.com/us/app/showrooms-servis-udobnogo/id659578469?l=ru&ls=1&mt=8)
 * [SmartAirkey](https://itunes.apple.com/ru/app/smartairkey/id1032832416?l=ru)
 * Client-Server with ability server-server message transferring
@@ -52,6 +56,7 @@ Probability, time series, statistics
 * Monte-Carlo algorithm' implementation with OpenMP usage.
 
 ## Additional information
+
 ### Coursera Courses
 * Algorithms: Design and Analysis, Part 1
 * Algorithms: Design and Analysis, Part 2
@@ -76,7 +81,7 @@ Probability, time series, statistics
 
 ### Personal qualities
 * Ability to find analogy and connections.
-* 'I-knew-it-all-before' syndrome
+* \'I-knew-it-all-before\' syndrome
 
 ### Hobbies
 * Playing musical instruments (guitar, piano)
