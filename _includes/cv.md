@@ -1,5 +1,5 @@
-#Dmitry Lobanov
-##Common
+# Dmitry Lobanov
+## Common
 **Date of birth**
 11.12.1990
 
@@ -12,17 +12,17 @@ single
 **Email**
 lobanovdm@hotmail.com
 
-##Education
-###University 
+## Education
+### University 
 Moscow State University
-###Faculty 
+### Faculty 
 Computational mathematics and cybernetics
-###Diploma 
+### Diploma 
 Upper estimations of deviation probabilities for sums of independent random variables
-###Area of interest 
+### Area of interest 
 Probability, time series, statistics
 
-##Work Experience
+## Work Experience
 3.5 years iOS Development in Kula Tech
 
 * [Maxim Russia](https://itunes.apple.com/ru/app/maxim-russia-samyj-citaemyj/id629947544?mt=8&uo=4)
@@ -39,7 +39,7 @@ Probability, time series, statistics
 * Advertising server maintenance and development
 * Ad targeting development
 
-##Projects
+## Projects
 * [Hell’o Baby](https://itunes.apple.com/app/hello-baby-interactive-baby/id898977963?l=ru&ls=1&mt=8)
 * [Showrooms](https://itunes.apple.com/us/app/showrooms-servis-udobnogo/id659578469?l=ru&ls=1&mt=8)
 * [SmartAirkey](https://itunes.apple.com/ru/app/smartairkey/id1032832416?l=ru)
@@ -51,14 +51,14 @@ Probability, time series, statistics
 * field and in ring modulo p.
 * Monte-Carlo algorithm' implementation with OpenMP usage.
 
-##Additional information
-###Coursera Courses
+## Additional information
+### Coursera Courses
 * Algorithms: Design and Analysis, Part 1
 * Algorithms: Design and Analysis, Part 2
 * Mining Massive Datasets
 * Vvedenie v machinnoe obuchenie
 
-###Programming Languages
+### Programming Languages
 * Objective-C/C/C++
 * Ruby
 * Perl
@@ -67,18 +67,18 @@ Probability, time series, statistics
 * R
 * C#
 
-###MS Excel and Statistics
+### MS Excel and Statistics
 * Good Knowledge
 
-###Foreign Languages
+### Foreign Languages
 * English (Upper-Intermediate)
 * French (Elementary)
 
-###Personal qualities
+### Personal qualities
 * Ability to find analogy and connections.
 * 'I-knew-it-all-before' syndrome
 
-###Hobbies
+### Hobbies
 * Playing musical instruments (guitar, piano)
 * Learning languages
 * Writing novels and poems
