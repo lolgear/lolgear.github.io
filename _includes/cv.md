@@ -8,10 +8,10 @@
 single
 
 **Phone**
-+7(926)4782611
+[+7(926)4782611](tel:+7(926)4782611)
 
 **Email**
-lobanovdm@hotmail.com
+[lobanovdm@hotmail.com](mailto:lobanovdm@hotmail.com)
 
 ## Education
 **University**
