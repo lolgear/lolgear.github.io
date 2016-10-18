@@ -3,7 +3,8 @@
 ## iOS application that allows you to open electronic locks by your smartphone.
 
 ## Tricky parts
-
+* Architecture
+	* Service-based architecture. (appearance, validation, device interaction, bluetooth etc)
 * Database
 	* Secure database with delayed setup.
 * Network
@@ -24,6 +25,4 @@
 * **Libraries**
 	* LITEventMachine, TransitionKit, AFNetworking, EncryptedCoreData, LITLightweightStore
 
-
-
-
+## Europe AppStore version (Rebranding) [XsAnyware](https://itunes.apple.com/us/app/xsanyware/id1157897494?mt=8)
