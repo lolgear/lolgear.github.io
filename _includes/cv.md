@@ -1,6 +1,6 @@
 # Dmitry Lobanov
 
-## Common  
+## Common
 **Date of birth**
 11.12.1990
 
@@ -82,10 +82,10 @@ Eventually
 
 ### Programming Languages
 * Objective-C/C/C++
+* Swift
 * Ruby
 * Perl
-* Scala 
-* Swift
+* Scala
 * R
 * C#
 
