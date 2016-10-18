@@ -19,7 +19,7 @@
 	* True iOS-styled UI elements. ( tabbars/navbars/tableviews and their customizations, Lock screen controller)
 
 * **Technologies**
-	* encrypted-sqlite, jwt, core-bluetooth, gzip, core-data, state machine, event bus, fluent, objective-c/swift
+	* encrypted-sqlite, protobuf, jwt, core-bluetooth, gzip, core-data, state machine, event bus, fluent, objective-c/swift
 
 * **Libraries**
 	* LITEventMachine, TransitionKit, AFNetworking, EncryptedCoreData, LITLightweightStore
