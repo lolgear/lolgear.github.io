@@ -75,8 +75,8 @@ Eventually
 ## Additional information
 
 ### Coursera Courses
-* [Algorithms\: Design and Analysis\, Part 1](https://drive.google.com/file/d/0B3YcTFqe25wgSng4NG5VRUFRclU/view?usp=sharing)
-* [Algorithms\: Design and Analysis\, Part 2](https://drive.google.com/file/d/0B3YcTFqe25wgX21ScnhnZHB0eGM/view?usp=sharing)
+* [Algorithms\: Design and Analysis, Part 1](https://drive.google.com/file/d/0B3YcTFqe25wgSng4NG5VRUFRclU/view?usp=sharing)
+* [Algorithms\: Design and Analysis, Part 2](https://drive.google.com/file/d/0B3YcTFqe25wgX21ScnhnZHB0eGM/view?usp=sharing)
 * [Mining Massive Datasets](https://drive.google.com/file/d/0B3YcTFqe25wgV0xPRnRUU2tnQ1U/view?usp=sharing)
 * [Vvedenie v machinnoe obuchenie](https://www.coursera.org/account/accomplishments/verify/KFKRUVJM4WFV)
 
@@ -86,14 +86,12 @@ Eventually
 * Ruby
 * Perl
 * Scala
-* R
-* C#
 
 ### MS Excel and Statistics
 * Good Knowledge
 
 ### Foreign Languages
-* English (Upper-Intermediate)
+* English (Fluent)
 * French (Elementary)
 
 ### Personal qualities
