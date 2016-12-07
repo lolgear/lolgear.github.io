@@ -11,7 +11,7 @@ single
 [+7(926)4782611](tel:+7(926)4782611)
 
 **Email**
-[lobanovdm@hotmail.com](mailto:lobanovdm@hotmail.com)
+[gaussblurinc@gmail.com](mailto:gaussblurinc@gmail.com)
 
 ## Education
 **University**
