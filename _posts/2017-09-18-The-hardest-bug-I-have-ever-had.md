@@ -222,7 +222,7 @@ I started inspecting Copy Files build phase - the only place where any clues or 
 
 I noticed something interesting.
 
-`AppIcon.xcassets`, `CustomInterfaces.xcassets` are not present in app. And also they are below `LocalizedInterfaces.xcassets`.
+`AppIcon.xcassets`, `CustomInterfaces.xcassets` were not present in app. And also they were below `LocalizedInterfaces.xcassets`.
 
 I moved down `LocalizedInterfaces.xcassets` to the end of the Copy Files Build phase files list.
 
@@ -230,5 +230,5 @@ I moved down `LocalizedInterfaces.xcassets` to the end of the Copy Files Build p
 
 # The end
 
-App icon appears on the phone screen.  
-I didn't believe it. I opened `.app` and assure myself that app icons are in this folder. They are in the root of it.
+App icon appeared on the phone screen.  
+I didn't believe it. I opened `.app` and assured myself that app icons were in this folder. They were in the root of it.
