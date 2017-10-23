@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The build system could hurts you."
+title: "The build system could hurt you."
 date: 2017-10-23 18:56:46 +0300
 categories: build-configurations frameworks
 ---
