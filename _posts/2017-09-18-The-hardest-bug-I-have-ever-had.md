@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The hardest bug I have ever had."
-date: 2017-09-18 16:16:01 -0600
+date: 2017-09-18 16:16:01 +0300
 categories: localization resources build-configurations
 ---
 
