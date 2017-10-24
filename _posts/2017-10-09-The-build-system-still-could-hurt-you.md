@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The build system could hurt you."
+title: "The build system could hurts you."
 date: 2017-10-23 18:56:46 +0300
 categories: build-configurations frameworks
 ---
@@ -45,7 +45,7 @@ Apple announced Swift and frameworks. Embedded or not, they are frameworks.
 
 I would like to share with you some troubles and solutions that I have seen during my investigation of all variations of embedded frameworks.
 
-# The crossroad
+# The Crossroad
 
 The main decision that we do in application development is how we are going to keep dependencies.
 
@@ -130,3 +130,269 @@ Dependencies Manager comparison table.
 | Linking | Automatic | Manual |
 | Dependencies file | Podfile | Cartfile |
 | Dependency file | `.podspec` | None |
+
+## What have I done!
+
+I mention above that my application has several modules. It is ObjectiveC application with zero Swift. ( Cola zero, yes ). It uses `CocoaPods` dependencies manager and it has zero modules or frameworks targets. Nice beginning.
+
+I start to split application into different modules. ( I don't use past time because it could be done now by you ). Several issues will occur, of course.
+
+### Description tables
+
+Let me show all issues that I catch in my divide-and-conquer march.
+
+This table show all states of my project configuration in timeline.
+
+| # | Project configuration name | Description |
+| ---- | ---- | ---- |
+| 1 | Static libraries and one project target | It has zero frameworks or framework targets, pure ObjectiveC project with one target |
+| 2 | Dynamic frameworks separated from project target | Each framework has its own directory and dependencies |
+| 3 | Dynamic frameworks aggregated into one project | One workspace with several framework projects and several application projects |
+
+Let me expand second state as the most interesting state into another table. It considered that each framework is a project and must have its own directory, its one workspace and its own dependencies. Each framework completely separated from another framework or main application. I would like to integrate all of these targets  without `CocoaPods`, but it would be more complicated ( or not ).
+However, `CocoaPods` exists in my project as a `CocoaLumberjack` provider and other third-party stuff.
+
+| # | Project configuration name | Description | Intergration into main target | Integration between frameworks | Integration into test target |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 2.1 | Test target alone | Test target is separated into different workspace, it also has its own dependencies | Archive binary framework | Archive binary framework | Archive binary framework |
+| 2.2 | Test target and framework target together | Test target is copied into framework project. Now it shares all framework source code | Archive binary framework | Archive binary framework | Integrated automatically |
+
+It would be nice if all of these things work. But I have custom setup and have caught many interesting pitfalls on this road. Let me show you common pitfalls and errors that you will catch.
+
+### Hard part with maths
+First of all, I will introduce variables.
+
+* MT - Integration into main target
+* TT - Integration into test target ( framework test target )
+* FT - Integration into framework target
+* FTT - Integration into framework test target ( another framework test target )
+
+Last one is my favorite, it shows that you do something wrong. Possible values for each variable could be gathered into a table, lets see it. Empty value means that variable exhausts all possible values.
+
+| Variable | Value # 1 | Value # 2 | Value # 3 |
+| ---- | ---- | ---- | ---- |
+| MT | Archive | CocoaPods | Source code |
+| TT | Archive | CocoaPods | |
+| FT | Archive | CocoaPods | |
+| FTT | Archive | CocoaPods | |
+
+We could change variables to more simple ones - union types. Let me introduce these variables.
+
+* UFT - Union type of framework target and its test target.
+* UFF - Union type of framework target and dependency framework target.
+* UTTF - Union type of test target and dependency framework target.
+* UMF - Union type of framework target and main application target.
+
+Possible values for all these variables are:
+
+| Variable | Value #1 | Value #2 | Value #3 |
+| ---- | ---- | ---- | ---- |
+| Union type | None | Workspace | Project |
+
+Also, we have obvious rules that frameworks are less coupled than its test targets and test targets are less coupled then frameworks. If we add comparison operation between values of Union type, we have obvious coupling rule:
+
+`None > Workspace > Project`
+
+That means that items in different workspaces are less coupled than items in one workspace. Items in different workspaces could communicate between each other only in terms of binary or ready-to-use product. It is a fall.
+
+After adding this comparison, we have restriction on values of these variables that could be described as:
+
+`UTTF >= UFF >= UFT`
+
+We could assume that variables are equal, nothing wrong with it. Also, we could assume that main target is coupled with frameworks as test target of different framework coupled with dependency framework.
+
+`UTTF =~ UMF`
+
+They are nearly the same and could not be different. It would not ok.
+
+Now the table of possible values of all variables:
+
+| UFT | UFF | UTTF | UMF |
+| --- | --- | --- | --- |
+|N|N|N|N|
+|W|N|N|N|
+|W|W|N|N|
+|W|W|W|W|
+|P|N|N|N|
+|P|W|N|N|
+|P|W|W|W|
+|P|P|N|N|
+|P|P|W|W|
+|P|P|P|P|
+
+Let's check this table. UTTF should be equal UMF. Or check this code.
+
+```ruby
+[0, 1, 2]
+.repeated_permutation(4).to_a
+.select{|a| (a[0] <= a[1]) && (a[1] <= a[2]) && (a[2] == a[3])}
+.map{|ar| ar.map{|a| case a; when 2; "N"; when 1; "W"; when 0; "P"; end }}
+.map{|ar| "|" + (ar.join "|") + "|"}.reverse.join("\n")
+```
+
+No words about code quality, you could do it better, yes. But it works and it gives you this table.
+
+Let me add values and description or names for these combinations.
+
+|#| UFT | UFF | UTTF | UMF | Description |
+| --- | --- | --- | --- | --- | --- |
+|1|N|N|N|N|Workspace for each target (main, framework, test)|
+|2|W|N|N|N|Framework and its test target in one workspace|
+|3|W|W|N|N|All frameworks and all their test targets in one workspace|
+|4|W|W|W|W|All targets in one workspace|
+|5|P|N|N|N|Framework and its test target in one project. All frameworks in their workspaces|
+|6|P|W|N|N|Framework and its test target in one project. All frameworks in one workspace. Main target in different workspace |
+|7|P|W|W|W|Framework and its test target in one project. All targets in one workspace|
+|8|P|P|N|N|All frameworks and all test targets in one project. Main target in different workspace|
+|9|P|P|W|W|All frameworks and all test targets in one project. Main target and all frameworks projects in one workspace|
+|10|P|P|P|P|All targets in one workspace|
+
+Wow, the complex table.
+
+What have I done in my project? I jump from the coupled part 10 to the least coupled number 1!
+
+Was it good or bad?
+
+## The pitfalls
+
+I suppose that you would like to reread previous table. It is hard to describe possible values, I know. Also it is hard to understand all hidden features and pitfalls that each row represent.
+
+At the end of the blog I will show my way in this journey from 10 to the last index that I've chosen.
+
+### From 10 to 1
+
+* Workspace for each target (main, framework, test)
+
+I remember my first steps. I just tell myself: "Hey, separate whole project into frameworks, it would be awesome". Wrong.
+
+#### The private pod. Simple case.
+
+I create simple Network module that contain all network logic and also uses under the hood `AFNetworking`. Only one dependency - it is simple. I integrate this pod without any issues. Simple and obvious. Everything works fine.
+
+I just tell myself: "Great stuff, dude! Let me test something!".
+
+I add completely separate test target project with its own `CocoaPods` dependencies. It works as expected. I add `.podpsec` with `AFNetworking` dependency and its work great. No issues. Also, test target lives well in this case, it could install framework as dependency via `CocoaPods`.
+
+We can conclude now that complete separation could be done via `CocoaPods` but is not recommended, because it is not natural that test for framework lives in completely different workspace.
+
+#### The private pod. Complex case.
+
+If you are addicted to dependencies manager, please, don't do it with your teammates.
+
+For example, you have a `Database` framework with one dependency - `crypto_database_driver`. Everyone wants to secure user data.
+
+I have done the same setup as for `Network`. Everything is fine. Except one thing. You could not add branch or commit as a dependency parameter in `.podspec`.
+
+Again.
+
+If you have a libary that exists in `CocoaPods` repository and you want to add this library to your library as a dependency, you can not specify branch or commit, only tag.
+
+It means that if this library has two versions, latest version eliminats one bug but adds another bug, you can't point to `bug-free` commit as a dependency in `.podspec` file.
+
+That's it.
+
+Now you can't use your library as `managed-by-cocoapods`.
+
+#### The private pod. Unsolved case.
+
+Further more, if you have a framework that uses another your framework, you may want to be smashed by train rather than solving this issue.
+
+I have this setup. I am sorry.
+
+I have setup in which three frameworks are in chain. Third framework depends on second and second framework depends on first. Each framework has its own test target that lives in separate workspace ( Remember that UFT is None ).
+
+However, this setup could not be solved well in case of `@import` and framework search paths. I will leave it here as unsolved.
+
+### From 1 to 2
+
+* Framework and its test target in one workspace
+
+Well, first step to go back is to combine framework target and test target. Sure, it is nice setup but it doesn't solve many problems. One problem that you will have only one `Podfile` to manage both framework and test targets.
+
+Nice, but it is all.
+
+### From 2 to 3
+
+* All frameworks and all their test targets in one workspace
+
+Curious setup. I also think about it, because now you could manage only one `Podfile` for all dependencies.
+
+However, the main problem is `use_frameworks!` option. You still need to manage two podfiles: one for this workspace with all frameworks and another for main target.
+
+One advantage, that this setup do, is test target dependency. Not correct. Test target dependency on dependent framework. Still incorrect.
+
+Now you could add other frameworks to specific test target and solve framework-dependency testability.
+
+### From 3 to 4
+
+* All targets in one workspace
+
+I think about this setup as one the best setup. One of the biggest problems in this and previous setup ( all frameworks and test targets only in one workspace ) is missing dependent frameworks. Test target doesn't copy them. For that reason you should add `Copy frameworks build phase` and add all dependent frameworks. 
+
+### From 4 to 5
+
+* Framework and its test target in one project. All frameworks in their workspaces
+
+Nice setup, but it still has disadvantages. One of them is complex test target setup.
+
+Yes, it lives near framework target, it has access to framework target code. But it doesn't solve missing dependent frameworks and you still need to add `Copy frameworks build phase` in test target. It simply doesn't copy them.
+
+### From 5 to 6
+
+* Framework and its test target in one project. All frameworks in one workspace. Main target in different workspace
+
+Nice, very nice setup. You solve many problems from `CocoaPods` **commit-dependency problem** to **missing-dependent-frameworks test target problem**. 
+
+Very-very nice setup. 
+
+However, how would you add your frameworks to your main target? Only one option - archive. 
+
+But here we have another hidden pitfall. You should compile project for both platforms - simulator and iOS or arm and intel processors. Yes, architectures are different. For that reason you could write or use tool that `lipo`-ing two binaries into one fat framework. It is **fat-framework problem**. It is not solved automatically.
+
+Also you may forget about bitcode. If it is enabled, you should also provide debug symbols in framework. It is **missing-debug-symbols problem**. It is not solved automatically.
+
+### From 6 to 7
+
+* Framework and its test target in one project. All targets in one workspace
+
+I suppose that it one of the best setups. You have one workspace for all projects - so, you have only one `Podfile`. All dependencies are solved by it.
+
+Whole project compiled from zero to one, **missing-debug-symbols problem** is eliminated. You don't need to provide fat framework to run application both on simulator and device - it's done already seamlessly. So, **fat-framework problem** is eliminated.
+
+But one hidden problem still exists.
+
+Suppose, that you have custom build configuration as I do. I duped it from Release and named it PublicBeta.
+
+It exists only in main target project. It doesn't exists in frameworks target projects.
+
+It means that Xcode uses incorrect frameworks search paths to look for these frameworks.
+
+To solve this problem you need to add build configuration to each framework project. It is **missing-build-configuration problem**.
+
+### From 7 to 8
+
+* All frameworks and all test targets in one project. Main target in different workspace
+
+It couples frameworks too tight into one project. However, it could solve one problem and it could not solve other problems.
+
+It solves **missing-build-configuration problem** by adding one build configuration into one frameworks project.
+
+It doesn't solve other problems that reveal 6 setup - **fat-framework problem** and **missing-debug-symbols problem**. You still need to add these frameworks to main target as binaries.
+
+### From 8 to 9
+
+* All frameworks and all test targets in one project. Main target and all frameworks projects in one workspace
+
+Well, this setup has all advantages of 7 setup. It also simplify **missing-build-configuration problem** solution by adding only one configuration for frameworks project, not for each framework project.
+
+However, one disadvantage is that an unicorn doesn't exist. You can't reuse frameworks in different projects because they are coupled too tight into one project.
+
+### From 9 to 10
+
+It is a common startup setup. It exists and hides nearly all hidden pitfalls.
+
+# What I have now?
+
+I got experience by solving all these complex setups. I choose for me setup #7 as the best setup. It eliminates many problems and needs only `O(n)` where `n - count of frameworks` actions to solve **missing-build-configuration problem**.
+
+Here is a big table with all problems and setups that solve them.
