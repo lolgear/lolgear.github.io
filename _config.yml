@@ -19,17 +19,20 @@ description: > # this means to ignore newlines until "baseurl:"
   Thoughts about myself and code inside.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+# twitter_username: jekyllrb
+github_username:  lolgear
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-midnight # jekyll-theme-architect
+theme: jekyll-theme-cayman #minima #jekyll-theme-cayman #jekyll-theme-midnight # jekyll-theme-architect
 plugins:
   - jekyll-feed
 
 # repo settings
 repository: lolgear/lolgear.github.io
+
+# third-party
+google_analytics: UA-108615326-1
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
