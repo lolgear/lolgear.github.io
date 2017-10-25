@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The build system could hurts you."
+title: "The build system could hurt you."
 date: 2017-10-23 18:56:46 +0300
 categories: build-configurations frameworks
 ---
@@ -12,7 +12,7 @@ Apple released new developer tool - Swift language. It intends to be a replaceme
 
 # Frameworks and Static libraries
 
-After swift released, it obligues you to develop libraries with one additional requirement - libraries should be frameworks.
+After swift released, it obliges you to develop libraries with one additional requirement - libraries should be frameworks.
 
 Tons of information are available on Apple developer, Stackoverflow. and third-party sites.  
 
@@ -69,7 +69,7 @@ If you are `iOS` or `.NET` or `Android` developer, most of the time you don't ne
 
 But you don't need to know source code of these items, it is not your area of interest in current product or project or position. Even if you are core developer and contribute to Swift or JVM, it is not a standard practice to build JVM or Swift for certain product and use it as source code instead of binary.
 
-However, you could do, remember, no limitations in sofware development world.
+However, you could do, remember, no limitations in software development world.
 
 Before I treated library only as binary and choose a core or platform or system library for example.
 
@@ -79,7 +79,7 @@ Yes, I tell about third-party libraries cause binary libraries of platform are a
 
 The difference between third-party libraries and system libraries is a delivery. They should be delivered to a project and be consistent with its latest stable version in certain compatibility conditions.
 
-Let me finish telling you obvious stuff about libraries and compatilibity.
+Let me finish telling you obvious stuff about libraries and compatibility.
  
 Third-party vendor gives you a binary and you should manage it, it is a point.
 
@@ -95,16 +95,16 @@ In iOS development world there are two of them that I know - [Carthage](https://
 Carthage is a decentralized dependencies manager. CocoaPods is a centralized dependencies manager with a specs repository to store all available dependencies.
 
 ### Carthage
-Decentralized dependencies manager which supports only frameworks. It builds artefacts in its directory and allow you to link them by hands. It has Carthage dependencies file ( `Cartfile` ) which store all information about how to find and build your libraries.
+Decentralized dependencies manager which supports only frameworks. It builds artifacts in its directory and allow you to link them by hands. It has Carthage dependencies file ( `Cartfile` ) which store all information about how to find and build your libraries.
 
-You should use links to existing github repository in Cartfile. As I remember, you could specify tag, commit and branch with it. 
+You should use links to existing github repository in `Cartfile`. As I remember, you could specify tag, commit and branch with it. 
 
 Good solution, yes?
 
 You could change mind after several tests that I will do.
 
 ### CocoaPods
-Centralized dependencies manager which supports both frameworks and static libraries. You switch between them by adding `use_frameworks!` directive. It has Pods dependencies file ( `Podfile` ) and additionaly spec dependency file ( `.podspec` ).
+Centralized dependencies manager which supports both frameworks and static libraries. You switch between them by adding `use_frameworks!` directive. It has Pods dependencies file ( `Podfile` ) and additional spec dependency file ( `.podspec` ).
 
 The whole process is very simple. It has many challenges that are hidden under nice command-line facade.
 
@@ -112,7 +112,7 @@ Instead of `Carthage`, which build dependencies **only once**, `CocoaPods` doesn
 
 To post a library to CocoaPods spec repository, you need a `.podspec`. It has meta information about a contributors and map options that allow pod engine to gather source code from a repository and connect it to your project as source code, not a binary.
 
-To get necessary dependencies, you need to configure `Podfile` file which containts information about your project structure. In case of automation, you need to specify existing targets and their names, workspace files and project files. Yes, if it could, it will substitute default names.
+To get necessary dependencies, you need to configure `Podfile` file which contains information about your project structure. In case of automation, you need to specify existing targets and their names, workspace files and project files. Yes, if it could, it will substitute default names.
 
 Dependencies, contrary to `Carthage`, could be installed by name with optional additional information as tag, branch or commit.
 
@@ -123,8 +123,8 @@ Dependencies Manager comparison table.
 | Feature | CocoaPods | Carthage |
 | --- | --- | --- |
 | Centralized | Centralized | Decentralized |
-| Build artefacts once | No | Yes |
-| Build artefacts before build | No | Yes |
+| Build artifacts once | No | Yes |
+| Build artifacts before build | No | Yes |
 | Supports iOS prior version 8 | Yes | No |
 | Supports static libraries | Yes | No |
 | Linking | Automatic | Manual |
@@ -152,7 +152,7 @@ This table show all states of my project configuration in timeline.
 Let me expand second state as the most interesting state into another table. It considered that each framework is a project and must have its own directory, its one workspace and its own dependencies. Each framework completely separated from another framework or main application. I would like to integrate all of these targets  without `CocoaPods`, but it would be more complicated ( or not ).
 However, `CocoaPods` exists in my project as a `CocoaLumberjack` provider and other third-party stuff.
 
-| # | Project configuration name | Description | Intergration into main target | Integration between frameworks | Integration into test target |
+| # | Project configuration name | Description | Integration into main target | Integration between frameworks | Integration into test target |
 | ---- | ---- | ---- | ---- | ---- | ---- |
 | 2.1 | Test target alone | Test target is separated into different workspace, it also has its own dependencies | Archive binary framework | Archive binary framework | Archive binary framework |
 | 2.2 | Test target and framework target together | Test target is copied into framework project. Now it shares all framework source code | Archive binary framework | Archive binary framework | Integrated automatically |
@@ -193,9 +193,9 @@ Also, we have obvious rules that frameworks are less coupled than its test targe
 
 `None > Workspace > Project`
 
-That means that items in different workspaces are less coupled than items in one workspace. Items in different workspaces could communicate between each other only in terms of binary or ready-to-use product. It is a fall.
+That means that items in different workspaces are less coupled than items in one workspace. Items in different workspaces could communicate between each other only in terms of binary or ready-to-use product. It is a fail.
 
-After adding this comparison, we have restriction on values of these variables that could be described as:
+After introducing this comparison, we have restriction on values of these variables that could be described as:
 
 `UTTF >= UFF >= UFT`
 
@@ -203,9 +203,9 @@ We could assume that variables are equal, nothing wrong with it. Also, we could 
 
 `UTTF =~ UMF`
 
-They are nearly the same and could not be different. It would not ok.
+They are nearly the same and could not be different.
 
-Now the table of possible values of all variables:
+The table of possible values of all variables:
 
 | UFT | UFF | UTTF | UMF |
 | --- | --- | --- | --- |
@@ -229,8 +229,7 @@ Let's check this table. UTTF should be equal UMF. Or check this code.
 .map{|ar| ar.map{|a| case a; when 2; "N"; when 1; "W"; when 0; "P"; end }}
 .map{|ar| "|" + (ar.join "|") + "|"}.reverse.join("\n")
 ```
-
-No words about code quality, you could do it better, yes. But it works and it gives you this table.
+No words about code quality, you could write it better, yes. But it works and it gives you this table.
 
 Let me add values and description or names for these combinations.
 
@@ -248,8 +247,7 @@ Let me add values and description or names for these combinations.
 |10|P|P|P|P|All targets in one workspace|
 
 Wow, the complex table.
-
-What have I done in my project? I jump from the coupled part 10 to the least coupled number 1!
+What have I done in my project? I've jumped from the coupled #10 to the least coupled #1!
 
 Was it good or bad?
 
@@ -285,9 +283,9 @@ I have done the same setup as for `Network`. Everything is fine. Except one thin
 
 Again.
 
-If you have a libary that exists in `CocoaPods` repository and you want to add this library to your library as a dependency, you can not specify branch or commit, only tag.
+If you have a library that exists in `CocoaPods` repository and you want to add this library to your library as a dependency, you can not specify branch or commit, only tag.
 
-It means that if this library has two versions, latest version eliminats one bug but adds another bug, you can't point to `bug-free` commit as a dependency in `.podspec` file.
+It means that if this library has two versions, latest version eliminates one bug but adds another bug, you can't point to `bug-free` commit as a dependency in `.podspec` file.
 
 That's it.
 
@@ -307,7 +305,7 @@ However, this setup could not be solved well in case of `@import` and framework 
 
 * Framework and its test target in one workspace
 
-Well, first step to go back is to combine framework target and test target. Sure, it is nice setup but it doesn't solve many problems. One problem that you will have only one `Podfile` to manage both framework and test targets.
+Well, first step to go back is union of framework target and test target. Sure, it is nice setup but it doesn't solve many problems. One problem that it solves is [**Problem #1**][1]. It will have only one `Podfile` to manage both framework and test target for this framework.
 
 Nice, but it is all.
 
@@ -317,7 +315,7 @@ Nice, but it is all.
 
 Curious setup. I also think about it, because now you could manage only one `Podfile` for all dependencies.
 
-However, the main problem is `use_frameworks!` option. You still need to manage two podfiles: one for this workspace with all frameworks and another for main target.
+However, the main problem is `use_frameworks!` option. You still need to manage two `Podfile`s: one for this workspace with all frameworks and another for main target.
 
 One advantage, that this setup do, is test target dependency. Not correct. Test target dependency on dependent framework. Still incorrect.
 
@@ -327,7 +325,7 @@ Now you could add other frameworks to specific test target and solve framework-d
 
 * All targets in one workspace
 
-I think about this setup as one the best setup. One of the biggest problems in this and previous setup ( all frameworks and test targets only in one workspace ) is missing dependent frameworks. Test target doesn't copy them. For that reason you should add `Copy frameworks build phase` and add all dependent frameworks. 
+I think about this setup as one the best setup. One of the biggest problems in this and previous setup ( all frameworks and test targets only in one workspace ) is [**Problem #2**][2]. Test target doesn't copy them. For that reason you should add `Copy frameworks build phase` and specify all dependent frameworks. 
 
 ### From 4 to 5
 
@@ -335,21 +333,21 @@ I think about this setup as one the best setup. One of the biggest problems in t
 
 Nice setup, but it still has disadvantages. One of them is complex test target setup.
 
-Yes, it lives near framework target, it has access to framework target code. But it doesn't solve missing dependent frameworks and you still need to add `Copy frameworks build phase` in test target. It simply doesn't copy them.
+Yes, it lives near framework target, it has access to framework target code. But it doesn't solve [**Problem #2**][2] and you still need to add `Copy frameworks build phase` in test target. It simply doesn't copy them.
 
 ### From 5 to 6
 
 * Framework and its test target in one project. All frameworks in one workspace. Main target in different workspace
 
-Nice, very nice setup. You solve many problems from `CocoaPods` **commit-dependency problem** to **missing-dependent-frameworks test target problem**. 
+Nice, very nice setup. You solve many problems from `CocoaPods` [**Problem #0**][3] to [**Problem #2**][2]. 
 
 Very-very nice setup. 
 
 However, how would you add your frameworks to your main target? Only one option - archive. 
 
-But here we have another hidden pitfall. You should compile project for both platforms - simulator and iOS or arm and intel processors. Yes, architectures are different. For that reason you could write or use tool that `lipo`-ing two binaries into one fat framework. It is **fat-framework problem**. It is not solved automatically.
+But here we have another hidden pitfall. You should compile project for both platforms - simulator and iOS or arm and intel processors. Yes, architectures are different. For that reason you could write or use tool that `lipo`-ing two binaries into one fat framework. It is [**Problem #3**][3]. It is not solved automatically.
 
-Also you may forget about bitcode. If it is enabled, you should also provide debug symbols in framework. It is **missing-debug-symbols problem**. It is not solved automatically.
+Also you may forget about bitcode. If it is enabled, you should also provide debug symbols in framework. It is [**Problem #4**][4]. It is not solved automatically.
 
 ### From 6 to 7
 
@@ -357,17 +355,15 @@ Also you may forget about bitcode. If it is enabled, you should also provide deb
 
 I suppose that it one of the best setups. You have one workspace for all projects - so, you have only one `Podfile`. All dependencies are solved by it.
 
-Whole project compiled from zero to one, **missing-debug-symbols problem** is eliminated. You don't need to provide fat framework to run application both on simulator and device - it's done already seamlessly. So, **fat-framework problem** is eliminated.
+Whole project compiled from zero to one, [**Problem #4**][4] is eliminated. You don't need to provide fat framework to run application both on simulator and device - it's done already seamlessly. So, [**Problem #3**][3] is eliminated.
 
 But one hidden problem still exists.
 
 Suppose, that you have custom build configuration as I do. I duped it from Release and named it PublicBeta.
 
-It exists only in main target project. It doesn't exists in frameworks target projects.
+It exists only in main target project. It doesn't exists in frameworks target projects. It means that Xcode uses incorrect frameworks search paths to look for these frameworks.
 
-It means that Xcode uses incorrect frameworks search paths to look for these frameworks.
-
-To solve this problem you need to add build configuration to each framework project. It is **missing-build-configuration problem**.
+To solve this problem you need to add build configuration to each framework project. It is a [**Problem #5**][5].
 
 ### From 7 to 8
 
@@ -375,15 +371,15 @@ To solve this problem you need to add build configuration to each framework proj
 
 It couples frameworks too tight into one project. However, it could solve one problem and it could not solve other problems.
 
-It solves **missing-build-configuration problem** by adding one build configuration into one frameworks project.
+It solves [**Problem #5**][5] by adding one build configuration into one frameworks project.
 
-It doesn't solve other problems that reveal 6 setup - **fat-framework problem** and **missing-debug-symbols problem**. You still need to add these frameworks to main target as binaries.
+It doesn't solve other problems that reveal 6 setup - [**Problem #3**][3] and [**Problem #4**][4]. You still need to add these frameworks to main target as binaries.
 
 ### From 8 to 9
 
 * All frameworks and all test targets in one project. Main target and all frameworks projects in one workspace
 
-Well, this setup has all advantages of 7 setup. It also simplify **missing-build-configuration problem** solution by adding only one configuration for frameworks project, not for each framework project.
+Well, this setup has all advantages of 7 setup. It also simplify [**Problem #5**][5] solution by adding only one configuration for frameworks project, not for each framework project.
 
 However, one disadvantage is that an unicorn doesn't exist. You can't reuse frameworks in different projects because they are coupled too tight into one project.
 
@@ -391,8 +387,61 @@ However, one disadvantage is that an unicorn doesn't exist. You can't reuse fram
 
 It is a common startup setup. It exists and hides nearly all hidden pitfalls.
 
-# What I have now?
+# End?
 
-I got experience by solving all these complex setups. I choose for me setup #7 as the best setup. It eliminates many problems and needs only `O(n)` where `n - count of frameworks` actions to solve **missing-build-configuration problem**.
+I have an experience in solving all these complex setups. I've chosen for myself setup #7 as the best setup. It eliminates many problems and needs only `O(n) where n - count of frameworks` actions to solve [**Problem #5**][5].
 
-Here is a big table with all problems and setups that solve them.
+## Problems and solutions
+
+### Problem 0 Commit dependency
+**Description**: CocoaPods does not allow you to specify commit-based dependency in your framework.  
+**When**: If you have a framework that uses not mainstream latest library version and should use derivations of this library.  
+Recommendation: Use private pods or don't use CocoaPods at all for framework handling.  
+**Solution**: Eliminate CocoaPods from a project or add your framework alone as binary and install its dependency in main project from any commit.  
+**Hint**: The linking phase will fix all problems and your project will have correct dependencies.  
+
+### Problem 1 Podfiles duplicates
+**Description**: You have two or more Podfiles to manage framework and test target for that framework.  
+**When**: When they are not coupled too tight.  
+**Recommendation**: They should be in one workspace or project.  
+
+### Problem 2 Missing frameworks in test target
+**Description**: Test target not runs in case of library image not found error.
+**When**: When frameworks not coupled well and test target uses external framework as binary dependency.  
+**Recommendation**: Put frameworks in one workspace.  
+**Solution**: Add Copy frameworks build phase in test target to copy all dependent frameworks to Frameworks directory.  
+
+### Problem 3 Fat framework
+**Description**: You need a fat framework with simulator and device architectures.
+**When**: It happens when you archive binary alone and put it into Link with Binary build phase in your test target.  
+**Recommendation**: Try to avoid it.  
+**Solution**: Build debug and release configurations binaries and `lipo`-ing them into one framework.
+
+### Problem 4 Missing debug symbols problem
+**Description**: You archive framework and add it to main target to build archive of application.  
+**When**: It happens when you archive framework alone and later add it to main project.  
+**Recommendation**: Try to avoid archive framework alone.  
+
+### Problem 5 Missing Build configuration
+**Description**: Projects has its own build configuration and doesn't share these configuration across workspace.  
+**When**: It happens when you create one workspace for all targets and also add extra build configuration in your main target.  
+**Recommendation**: Just know a solution.  
+**Solution**: Add all build configurations from main target to each framework.
+
+Good table with problems and solutions.
+
+|#|Problem Name|Description|When|Recommendation|Solution|Hint|
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+|0|Commit dependency|CocoaPods does not allow you to specify commit-based dependency in your framework.|If you have a framework that uses not mainstream latest library version and should use derivations of this library.|Use private pods or don't use CocoaPods at all for framework handling.|Eliminate CocoaPods from a project or add your framework alone as binary and install its dependency in main project from any commit.| The linking phase will fix all problems and your project will have correct dependencies.|
+|1| Podfiles duplicates |You have two or more Podfiles to manage framework and test target for that framework.| When they are not coupled too tight. | They should be in one workspace or project. | They should be in one workspace or project. |
+|2| Missing frameworks in test target | Test target not runs in case of library image not found error. | When frameworks not coupled well and test target uses external framework as binary dependency. | Put frameworks in one workspace. | Add Copy frameworks build phase in test target to copy all dependent frameworks to Frameworks directory. |
+|3| Fat framework | You need a fat framework with simulator and device architectures. | It happens when you archive binary alone and put it into Link with Binary build phase in your test target. | Try to avoid it. | Build debug and release configurations binaries and `lipo`-ing them into one framework. |
+|4| Missing debug symbols problem | You archive framework and add it to main target to build archive of application. | It happens when you archive framework alone and later add it to main project. | Try to avoid archive framework alone. |
+|5| Missing Build configuration | Projects has its own build configuration and doesn't share these configuration across workspace. | It happens when you create one workspace for all targets and also add extra build configuration in your main target. | Just know a solution. | Add all build configurations from main target to each framework. |
+
+[0]:#problem-0-commit-dependency
+[1]:#problem-1-podfiles-duplicates
+[2]:#problem-2-missing-frameworks-in-test-target
+[3]:#problem-3-fat-framework
+[4]:#problem-4-missing-debug-symbols
+[5]:#problem-5-missing-build-configuration
