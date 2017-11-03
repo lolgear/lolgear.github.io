@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tricky Swift: Subclass adoption of protocol by binding to superclass."
-date: 2017-11-01 17:15:11 +0300
+date: 2017-11-03 16:56:48 +0300
 categories: swift tricks subclasses
 ---
 
