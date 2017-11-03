@@ -211,3 +211,17 @@ It works!
 # Final thoughts
 
 Well, you should know a limits of generics. Most of the time you should not use them without a patience.
+
+Moreover, you could extract a pattern from this technique.
+
+```swift
+protocol HasFactoryMethod {
+    static func factory<T: HasFactoryMethod>() -> T?
+}
+
+extension HasFactoryMethod {
+    static func typedFactory() -> Self? {
+        return factory()
+    }
+}
+```
