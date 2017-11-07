@@ -68,7 +68,7 @@ extension DebugInformationProtocol where Self: NSManagedObject {
 
 Don't forget about some tests.
 
-```
+```swift
 class CustomControl: UIView {
     func test() {
         self.debugInformationAboutSubviews()
