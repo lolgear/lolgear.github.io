@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tricky Swift: Generic parameter default value."
-date: 2018-15-06 01:30:02 +0300
+date: 2018-03-15 01:30:02 +0300
 categories: swift tricks generics functions
 ---
 
