@@ -1,21 +1,17 @@
-# Adventures of F in ObjectiveC. Monoid #
-
-## Metadata ##
-
----
+—
 layout: post
-title: "Adventures of F in ObjectiveC. Monoid"
+title: "Adventures of F in ObjectiveC: Monoid"
 date: 2018-11-25 17:15:34 +0300
 categories: objectivec functional monoid
----
+—
 
-## Begin ##
+# Begin #
 
 This is the very first adventure of Functional Programming ( letter F ) in ObjectiveC world. Long time ago mathematicians invent the Scariest and Dreadful expression of their mind - Haskell language. Most of the people are run away into their OOP world behind walls of patterns and frameworks. But Haskell, the Lord will come one day and reveal you in structure cabin and turn you to the Darkness.
 
 Or you will never understand parallel programming and other immutable stuff, hah.
 
-## Monoid ##
+# Monoid #
 
 Let's start with Monoid definition. 
 
@@ -30,7 +26,7 @@ From [wikipedia](https://en.wikipedia.org/wiki/Monoid).
 
 You can cry a lot in your oopillow, but it is simple. Well, it is supersimple in terms of interfaces and protocols as you wish. You only need to find a zero element in your group ( i.e. zero in numbers ) and add any operation ( for zero it is addition, because 1 + 0 = 0 + 1 = 1. For one it is multiplication, because 1 * 0 = 0 * 1 = 0 ) for which associativity and identity elements rules are fulfill.
 
-## Protocol ##
+# Protocol #
 
 First of all, we need a protocol for monoid with methods that are necessary for monoid.
 
@@ -90,7 +86,7 @@ And implementation.
 
 That's all, we can move forward and find monoids, in, wait for it, simple foundation types.
 
-## Foundation ##
+# Foundation #
 
 I will show you several foundation types which are good candidates for monoids.
 
@@ -127,9 +123,9 @@ Before implementation I would like to add notes about implementation.
 
 Monoid doesn't postulate commutative operation. Hence, you are able to choose any parameter as first. However, operation associativity should take place.
 
-## Implementations ##
+# Implementations #
 
-### NSNumber ###
+## NSNumber ##
 
 Numbers are simple and they are immersed or has traits of many mathematics structures. I choose simple addition as an internal operation.
 
@@ -154,7 +150,7 @@ Numbers are simple and they are immersed or has traits of many mathematics struc
 
 Our identity element for addition is zero. We simply add right value to left value in operation. And also we generate any element by random function.
 
-### NSString ###
+## NSString ##
 
 Strings are the first type that doesn't have pretty internal operation like numbers has addition. In case of strings we should choose operation and precedence of it. We can use simple concatenation where right left string is followed by right string. Left + right.
 
@@ -183,7 +179,7 @@ Strings are the first type that doesn't have pretty internal operation like numb
 
 String is the first class cluster which hides all of subclasses zoo. For that we should check for exactly `NSString` class as superclass of whole class cluster.
 
-### NSArray ###
+## NSArray ##
 
 Arrays are just lists which has concatenation operation. Left + Right. And as `NSString` this class `NSArray` has various subclasses inside. We should check exactly for superclass of this cluster.
 
@@ -212,7 +208,7 @@ Arrays are just lists which has concatenation operation. Left + Right. And as `N
 
 Strings and Lists are very similar. If you treat String as List of Characters, so, you automatically get monoid for Strings from monoid for Lists.
 
-### NSSet ###
+## NSSet ##
 
 Sets are pretty awesome as numbers. Their union operation from Set Algebra gives us the same power as addition gives for numbers. However, they are different.
 
@@ -239,7 +235,7 @@ Sets are pretty awesome as numbers. Their union operation from Set Algebra gives
 
 As you see, we create new set C = A + B in operation. Simple, yes?
 
-### NSDictionary ###
+## NSDictionary ##
 
 Dictionaries are tricker than others types, because we should prove associativity of operation. But you could enhance current sketch to add associativity constraint to this operation.
 
@@ -266,7 +262,7 @@ Dictionaries are tricker than others types, because we should prove associativit
 
 We are adding keys and values from one dictionary to another dictionary pair-by-pair. Check that everything will be alright.
 
-## Tests ##
+# Tests #
 
 Tests are straightforward.
 
@@ -317,6 +313,6 @@ Tests are straightforward.
 
 We check identity element rule and associativity of operation.
 
-## Final ##
+# Final #
 
 Instead of conclusion I would encourage you to check operation that is defined for NSDictionary against associativity. If something bad happens, you always can change implementation to ensure that new operation has associativity.
