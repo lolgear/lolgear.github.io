@@ -1,9 +1,9 @@
-—
+---
 layout: post
 title: "Adventures of F in ObjectiveC: Monoid"
 date: 2018-11-25 17:15:34 +0300
 categories: objectivec functional monoid
-—
+---
 
 # Begin #
 
