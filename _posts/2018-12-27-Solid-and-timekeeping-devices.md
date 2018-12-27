@@ -53,7 +53,7 @@ Timekeeping device is a perfect example of minimalistic device which do its job.
 # D is Dependency Inversion Principle #
 
 > one should "depend upon abstractions, [not] concretions."
-It is a tricky principle. However, watches all over the history proof it.
+It is a tricky principle. However, watches all over the history prove it.
 
 Sand watches, water watches, fire watches, real watches and smartphones. And, for example, you have a check game. 
 Obviously, you can use sand watches to play a game. However, it is a bit difficult. You should reset time by turning them upside-down. More interesting, this is not the best option for check game. Or you can use fire clock with "stop" function - just blow it down when you need. It is handful and easy.
