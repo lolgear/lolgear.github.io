@@ -24,6 +24,7 @@ Let's see each principle under magnifying glass.
 # S is Single Responsibility Principle #
 
 > a class should have only a single responsibility (i.e. only changes to one part of the software's specification should be able to affect the specification of the class).
+
 The easiest principle for timekeeping devices. Throughout human history watches just show current time at specific zone.
 
 They've become smarter. Today we have many different types of timekeeping devices, however, they don't boil a water or don't make a dinner. If they do it, it is a hybrid of two devices - one part shows time and another part cooks a dinner. But in the guts they are separated into real different parts. You can open, for example, stove and cut off only a part which shows current time. It is just illusion that they are the same device.
@@ -31,6 +32,7 @@ They've become smarter. Today we have many different types of timekeeping device
 # O is Open and Closed Principle #
 
 > software entities ... should be open for extension, but closed for modification.
+
 Some timekeeping devices have the same mechanism under the hood. For example, one of the oldest devices - a candle.
 It is a watch that has a fire mechanism inside. It burns down while time is going on. You can find one hour candle.
 
@@ -41,6 +43,7 @@ Oil watches have interesting addition or extension. They have a transparent vess
 # L is Liskov Substitution Principle #
 
 > objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.
+
 It is a simple evolution of watches. Each type of timekeeping device just inherits the main feature of generic timekeeping device - it shows current time.
 
 # I is Interface Segregation Principle #
@@ -53,11 +56,15 @@ Timekeeping device is a perfect example of minimalistic device which do its job.
 # D is Dependency Inversion Principle #
 
 > one should "depend upon abstractions, [not] concretions."
+
 It is a tricky principle. However, watches all over the history prove it.
 
 Sand watches, water watches, fire watches, real watches and smartphones. And, for example, you have a check game. 
+
 Obviously, you can use sand watches to play a game. However, it is a bit difficult. You should reset time by turning them upside-down. More interesting, this is not the best option for check game. Or you can use fire clock with "stop" function - just blow it down when you need. It is handful and easy.
+
 But modern devices also developed "ready" function. When you press a button, it will end your turn and start opponent turn.
+
 You use watches as device which shows time and, optionally, has reset function. Design upfront and mechanism underneath are changing all over the time. But you know how to use them because they are functionally clear.
 
 # Final #
