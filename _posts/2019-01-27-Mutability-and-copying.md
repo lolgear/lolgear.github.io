@@ -5,9 +5,23 @@ date: 2019-01-27 17:51:45 +0300
 categories: objc mutability properties copying
 ---
 
+# Table of Contents #
+
+- [Introduction](#introduction)
+- [Mutability](#mutability)
+- [Jumps](#jumps)
+- [Protocols](#protocols)
+- [Example](#example)
+- [Tomatoes](#tomatoes)
+- [Backdraft](#backdraft)
+- [Next Steps](#next-Steps)
+- [Copying everything](#copying-everything)
+- [Relax](#relax)
+- [Conclusion](#conclusion)
+
 # Introduction #
 
-Several days ago I was asked about implementation of one of simplest interfaces - simple structure in Objective-C. I a bit confused about interface because it doesn't have proper storage modifiers on properties. Moreover, I was treated as "person who don't know about mutable classes."
+Several days ago I was asked about implementation of one of simplest interfaces - simple structure in Objective-C. I am bit confused about interface because it doesn't have proper storage modifiers on properties. Moreover, I was treated as "person who don't know about mutable classes."
 
 Let's dive in.
 
@@ -15,11 +29,11 @@ Let's dive in.
 
 Objective-C uses mutable counterparts of various classes to narrow down area of their mutable states and also to improve performance of various operations. However, mutable classes have their trade-offs as improper storage.
 
-Since many mutable classes are subclases or sons of their immutable superclasses and fathers, it is necessary to keep them separately and assure yourself that this object in this variable is mutable or immutable, no matter what is happening behind scenes.
+Since many mutable classes are subclasses or sons of their immutable superclasses and fathers, it is necessary to keep them separately and assure yourself that this object in this variable is mutable or immutable, no matter what is happening behind scenes.
 
 # Jumps #
 
-Yeah, strange word, I should entitle this part as bridges/conversion/interoperability (kind of)/transforms etc. But, wait, it is really boring.
+Yeah, strange word, I should entitle this part as bridges/conversion/interoperability (kind of)/transforms, etc. But, wait, it is really boring.
 
 We have two classes: immutable superclass and mutable subclass. Let's give them their names.
 
@@ -30,20 +44,20 @@ We have two classes: immutable superclass and mutable subclass. Let's give them 
 @end
 ```
 
-We can also define somekind of protocol for jumps between them. But it is rather complex for our purposes.
+We can also define some kind of protocol for jumps between them. But it is rather complex for our purposes.
 
 So said Apple in their NSObject and gives us a beautiful protocol NSCopying which provides necessary functionality. Nor far so good for us, it only gives copy methods. For that Apple separate mutable copy methods into another protocol NSMutableCopy.
 
 
 # Protocols #
 
-We have mutable classes in Foundation that adopts NSCopying and NSMutableCopying protocols. But since mutable classes are subclasses of immutable classes, immutable classes must adopt both protocol.
+We have mutable classes in Foundation that adopt NSCopying and NSMutableCopying protocols. But since mutable classes are subclasses of immutable classes, immutable classes must adopt both protocol.
 
-Conversion scheme is easy. You ask immutable object to provide a mutable object by mutable copying. And vice versa. Mutable object can provide an immutable object by immutable or general copying.
+Conversion scheme is easy. You ask immutable object to provide a mutable object by mutable copying. Vice versa, mutable object can provide an immutable object by immutable or general copying.
 
 I emphasize that general or immutable copying is not the same as mutable one. Most of the time you would like to have structures that can give copies without any features of transforms and mutability.
 
-Mutable copying is closer to mutabilty pattern. It should give you an object which can mutate. No matter what you have, mutable copy will give you open to modifications object.
+Mutable copying is closer to mutability pattern. It should give you an object which can mutate. No matter what you have, mutable copy will give you open to modifications object.
 
 But, rules are rules, you can break them.
 
@@ -157,7 +171,7 @@ And run tests.
     NSLog(@"other will see: %@", portfolio);
     XCTAssertNotNil(portfolio);
 
-Interesting feature here I have added. You can not copy Identifier string here, because it will generate another UUID. And this is correct behavior.
+Interesting feature here I have added. You can't copy Identifier string here, because it will generate another UUID. And this is correct behavior.
 
 # Next Steps #
 
@@ -216,7 +230,7 @@ But we can't copy ID. Let's fix this implementation by removing all copy occurre
 It is still incorrect. Because I can pass mutable string or general string as ID. Should we also check for them? Also, do we have access to our new subclass in portfolio? Let's try to figure out what we can do?
 
 ```objective-c
-- (NSString *)copyIfNeeded:(NSStirng *)string {
+- (NSString *)copyIfNeeded:(NSString *)string {
 	BOOL shouldCopy = string == nil || [string isKindOf:NSMutableString.class];
 	return shouldCopy ? [string copy] : string;
 }
