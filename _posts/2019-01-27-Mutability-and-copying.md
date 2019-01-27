@@ -14,7 +14,7 @@ categories: objc mutability properties copying
 - [Example](#example)
 - [Tomatoes](#tomatoes)
 - [Backdraft](#backdraft)
-- [Next Steps](#next-Steps)
+- [Next Steps](#next-steps)
 - [Copying everything](#copying-everything)
 - [Relax](#relax)
 - [Conclusion](#conclusion)
@@ -127,49 +127,98 @@ Yeah, example is fixed, you are great and all. My suggestion would be simple. Co
 ```objective-c
 @interface Portfolio_Identifier : NSString
 - (instancetype)initWithUUID:(NSUUID *)uuid;
+@property (copy, nonatomic, readonly) NSString *compressedUUID;
 @end
 
 @interface Portfolio_Identifier ()
-@property (copy, nonatomic, readwrite) NSString *UUID;
+@property (copy, nonatomic, readwrite) NSString *rawUUID;
+@property (copy, nonatomic, readwrite) NSString *compressedUUID;
 @end
 
 @implementation Portfolio_Identifier
+#pragma mark - Init
 - (instancetype)init {
     return [self initWithUUID:[NSUUID UUID]];
 }
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    __auto_type uuid = (NSUUID *)[[NSUUID alloc] initWithUUIDString:[aDecoder valueForKey:@"UUID"]];
+    return [self initWithUUID:uuid];
+}
 - (instancetype)initWithUUID:(NSUUID *)uuid {
+    if (uuid == nil) { return nil; }
     if (self = [super init]) {
-        self.UUID = [uuid.UUIDString stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        self.rawUUID = [uuid.UUIDString stringByReplacingOccurrencesOfString:@"-" withString:@""];
     }
     return self;
 }
+#pragma mark - Encoding
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder setValue:self.rawUUID forKey:@"UUID"];
+}
+
+#pragma mark - Copying
 - (instancetype)copyWithZone:(NSZone *)zone {
     return [[self.class alloc] init];
 }
-- (NSUInteger)length {
-    return self.UUID.length;
+- (instancetype)mutableCopyWithZone:(NSZone *)zone {
+    return nil;
 }
-- (NSString *)debugDescription {
-    return self.UUID;
+
+#pragma mark - CompressedUUID.
+- (void)updateCompressedUUID {
+    self.compressedUUID = [self compressUUID:self.rawUUID];
 }
-- (NSString *)description {
-    __auto_type length = self.length;
+
+- (NSString *)compressUUID:(NSString *)uuid {
+    __auto_type length = uuid.length;
     __auto_type notHiddenUntilIndex = 3;
     __auto_type notHiddenAfterIndex = 3;
     __auto_type range = NSMakeRange(notHiddenUntilIndex, length - notHiddenUntilIndex - notHiddenAfterIndex);
-    return [self.UUID stringByReplacingCharactersInRange:range withString:@"***"];
+    return [uuid stringByReplacingCharactersInRange:range withString:@"***"];
+}
+
+- (void)setRawUUID:(NSString *)rawUUID {
+    _rawUUID = rawUUID;
+    [self updateCompressedUUID];
+}
+
+#pragma mark - Class Cluster methods
+- (NSUInteger)length {
+    return [self compressedUUID].length;
+}
+- (unichar)characterAtIndex:(NSUInteger)index {
+    return [[self compressedUUID] characterAtIndex:index];
+}
+
+#pragma mark - Descriptions
+- (NSString *)debugDescription {
+    return self.rawUUID;
+}
+- (NSString *)description {
+    return [self compressedUUID];
 }
 @end
 ```
 
 And run tests.
 
+```objective-c
+- (void)testExample {
     __auto_type uuid = [NSUUID UUID];
     __auto_type ID = [[Portfolio_Identifier alloc] initWithUUID:uuid];
     __auto_type portfolio = [[Portfolio alloc] initWithID:ID name:@"Name"];
+    __auto_type portfolio2 = [[Portfolio alloc] initWithID:nil name:@"Name"];
     NSLog(@"developer will see: %@", portfolio.debugDescription);
     NSLog(@"other will see: %@", portfolio);
     XCTAssertNotNil(portfolio);
+    if (ID != nil) {
+        __auto_type archived = [NSKeyedArchiver archivedDataWithRootObject:ID requiringSecureCoding:NO error:nil];
+        __auto_type unarchived = (Portfolio_Identifier *)[NSKeyedUnarchiver unarchivedObjectOfClass:Portfolio_Identifier.class fromData:archived error:nil];
+        NSLog(@"unarchived: %@", unarchived);
+        XCTAssertEqualObjects(ID, unarchived);
+    }
+}
+```
 
 Interesting feature here I have added. You can't copy Identifier string here, because it will generate another UUID. And this is correct behavior.
 
