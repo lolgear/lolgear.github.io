@@ -49,13 +49,13 @@ extension Models.New.City: CityProtocol {}
 
 As you see, you should copy-paste a lot of data. In my example I intentionally use classes instead of structures. If you have a structure, you already have namespaces of such kind. With classes you may want to subclasses from old class and redefine methods or you want to extend classes and add several methods.
 
-But what you want to change classes to structures or vice versa? It is not possible to inherit from structure or to be inherited by structure. It makes no sense.
+But what if you want to change classes to structures or vice versa? It is not possible to inherit from structure or to be inherited by structure. It makes no sense.
 
 What can we do?
 
 # Namespaces as typealiases #
 
-Our approach is simple. We just define a type alias to our  namespace in each file. That's it. But also change access control for this type alias to file private.
+Our approach is simple. We just define a type alias to our namespace in each file. That's it. But also change access control for this type alias to file private.
 
 Consider previous scenario with our type aliases.
 
