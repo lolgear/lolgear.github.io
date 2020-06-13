@@ -69,7 +69,7 @@ enum Models {
 
 ```swift
 /// Models+Old.swift
-Fileprivate typealias Namespace = Models.Old
+fileprivate typealias Namespace = Models.Old
 extension Namespace {
     class Address {}
     class City {}
@@ -81,7 +81,7 @@ extension Namespace.City: CityProtocol {}
 
 ```swift
 /// Models+New.swift
-Fileprivate typealias Namespace = Models.New
+fileprivate typealias Namespace = Models.New
 extension Namespace {
     class Address {}
     class City {}
