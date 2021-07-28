@@ -24,15 +24,17 @@ github_username:  lolgear
 
 # Build settings
 markdown: kramdown
-theme: jekyll-theme-cayman #minima #jekyll-theme-cayman #jekyll-theme-midnight # jekyll-theme-architect
+# theme: jekyll-theme-cayman #minima #jekyll-theme-cayman #jekyll-theme-midnight # jekyll-theme-architect
+remote_theme: pages-themes/cayman@v0.2.0
 plugins:
+  - jekyll-remote-theme
   - jekyll-feed
 
 # repo settings
 repository: lolgear/lolgear.github.io
 
 # third-party
-google_analytics: UA-108615326-1
+google_analytics: G-KG988NDZ58
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
